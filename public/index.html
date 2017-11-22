@@ -15,41 +15,45 @@
 
     <div id="myCollection" ng-controller="myCtrl">
         <div id="pseudoNav">
+             <input class="add-budget" ng-model="money" type="number" placeholder=" Add to the budget">    
+            <button class="btn btn-primary" ng-model="money" ng-click="addBudget(money)">Add amount</button> <br><br>
+            <span class="budget" ng-model="budget">Budget left:{{budget.mybudget|currency}}</span> 
             <h2>My Collection</h2>
-         <div class=form-group">
-            <input placeholder="Search by title">
-            <select class="form-controll ">
-                <option ng-repeat="year in years ">{{year}}</option>
+            <div class=form-group ">
+            <input placeholder="Search by title ">
+            <select ng-model="year"  class="form-controll">
+                <option value>Any year</option>                    
+                <option ng-repeat="year in years">{{year}}</option>
             </select>
-            <i class="fa fa-trash-o"  ng-click="showRemoveOption()" ng-hide="trashClicked"></i>
-            <i class="fa fa-check" ng-show="trashClicked" ng-click="showRemoveOption()"></i>
+            <i class="fa fa-trash-o "  ng-click="showRemoveOption() " ng-hide="trashClicked "></i>
+            <i class="fa fa-check " ng-show="trashClicked " ng-click="showRemoveOption() "></i>
         </div>
     </div>
-    <div class="myMovies"> 
+    <div class="myMovies "> 
             <div class="container-fluid ">
                     <div class="row ">
-                            <div class="col-md-3 movie " ng-repeat="movie in myCollection" >
+                            <div class="col-md-3 movie " ng-repeat="movie in myCollection|filter:{year:year} " >
                                 <img src={{movie.img}}>
                                 <h4>{{movie.title}} ,{{movie.year}}</h4>                            
                                 <p>{{movie.descrShort}}</p>
-                                <span class="removeButton" ng-show="trashClicked">
-                                        <a ng-click="removeMovie($index)">Remove</a>
+                                <span class="removeButton " ng-show="trashClicked ">
+                                        <a ng-click="removeMovie($index) ">Remove</a>
                                  </span>
                             </div>
                             
                     </div>
                 </div>
     </div>
-    <p class="h2">Select movies from below to add to your colletion</p>
+    <p class="h2 ">Select movies from below to add to your colletion</p>
     <hr>
         <section class="all-movies ">
-            <div class="all-movies-header">
+            <div class="all-movies-header ">
                     <h1>All Movies</h1>
-                    <input placeholder="Search by title" ng-valid ng-empty>
+                    <input placeholder="Search by title " ng-model="search " ng-valid ng-empty>
             </div>
             <div class="container-fluid ">
                 <div class="row ">
-                        <div class="col-md-3 movie " ng-repeat="movie in movies " ng-click="addToCart(movie) ">
+                        <div class="col-md-3 movie " ng-repeat="movie in movies |filter:{title:search} " ng-click="addToCart(movie,$index) ">
                             <img src={{movie.img}}>
                             <h4>{{movie.title}} ,{{movie.year}}</h4>                            
                             <p>{{movie.descrShort}}</p>
